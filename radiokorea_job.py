@@ -1,7 +1,6 @@
-from bs4.element import AttributeValueWithCharsetSubstitution
 import requests
-import re
 from bs4 import BeautifulSoup
+import re
 
 # List of filter words
 job_list = [
