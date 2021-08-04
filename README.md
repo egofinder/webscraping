@@ -6,6 +6,5 @@
 
 
 ## 1. Prerequisite
-### 1. Code use libraries that Amazon lambda doesn't support natively, you must zip library and add layer to lambda fuctions.[tutorial](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html)
-### pip3 install datetime beautifulsoup4 requests -t ./custom_directory
+### 1. Code use libraries that Amazon lambda doesn't support natively, you must zip library (pip3 install datetime beautifulsoup4 requests -t ./custom_directory) and add layer to lambda fuctions.[tutorial](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html)
 ### 2. Creating schedule rule using Amazon CloudWatch and add to triger on lambda fuctions. 
