@@ -1,6 +1,10 @@
-import requests
+import requests, re, csv
 from bs4 import BeautifulSoup
-import re
+
+
+f = open("./csv_file.csv", "w+", encoding="utf-8")
+temp_csv_file = csv.writer(f)
+temp_csv_file.writerow(["Title", "Area", "Date", "Link"])
 
 # List of filter words
 job_list = [
@@ -16,7 +20,7 @@ job_list = [
 ]
 
 # Seraching job posting dash board from 1 to 10
-for i in range(1, 3):
+for i in range(1, 10):
     url = "https://radiokorea.com/bulletin/bbs/board.php?bo_table=c_jobs&page={}".format(i)
 
     # Create headers in case website block the scraping
@@ -25,7 +29,7 @@ for i in range(1, 3):
     }
     res = requests.get(url, headers=headers)
     res.raise_for_status()
-    soup = BeautifulSoup(res.text, "lxml")
+    soup = BeautifulSoup(res.text, "html.parser")
 
     items = soup.find_all("a", attrs={"class": "thumb"})
 
@@ -39,7 +43,13 @@ for i in range(1, 3):
         else:
             for filter in job_list:
                 if re.compile(filter).search(job_title.get_text().lower()):
-                    print(job_title.get_text())
-                    print(area.get_text())
-                    print(date.get_text())
-                    print("https://radiokorea.com/bulletin" + item["href"][2:])
+                    temp_csv_file.writerow(
+                        [
+                            job_title.get_text(),
+                            area.get_text(),
+                            date.get_text(),
+                            "https://radiokorea.com/bulletin" + item["href"][2:],
+                        ]
+                    )
+
+f.close()
